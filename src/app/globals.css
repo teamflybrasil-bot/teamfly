@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/* Dark mode baseado em classe (.dark) — controlado por next-themes */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   TOKENS DE MARCA — TeamFly Brasil
+   Azul Marinho #131B2E · Laranja #FF6A00 · Branco · Cinza Claro
+   ============================================================ */
+@theme {
+  /* Marca */
+  --color-navy-950: #0b111e;
+  --color-navy-900: #0f1523;
+  --color-navy-800: #131b2e;
+  --color-navy-700: #1c2740;
+  --color-navy-600: #283651;
+  --color-navy-500: #38496b;
+
+  --color-orange-600: #e85d00;
+  --color-orange-500: #ff6a00;
+  --color-orange-400: #ff8534;
+  --color-orange-300: #ffa869;
+
+  --color-cloud: #f4f5f7;
+  --color-cloud-200: #e6e8ec;
+
+  /* Tipografia */
+  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  /* Sombra premium */
+  --shadow-premium: 0 24px 60px -20px rgb(19 27 46 / 0.35);
+  --shadow-card: 0 8px 30px -12px rgb(19 27 46 / 0.18);
+
+  /* Container */
+  --breakpoint-3xl: 1600px;
+
+  /* Animações */
+  --animate-marquee: marquee 40s linear infinite;
+}
+
+/* ============================================================
+   TOKENS SEMÂNTICOS (flip entre claro/escuro)
+   ============================================================ */
+:root {
+  --background: #ffffff;
+  --foreground: #131b2e;
+  --card: #ffffff;
+  --card-foreground: #131b2e;
+  --muted: #f4f5f7;
+  --muted-foreground: #5b6473;
+  --border: #e6e8ec;
+  --accent: #ff6a00;
+}
+
+.dark {
+  --background: #0b111e;
+  --foreground: #f4f5f7;
+  --card: #131b2e;
+  --card-foreground: #f4f5f7;
+  --muted: #1c2740;
+  --muted-foreground: #9aa3b2;
+  --border: #283651;
+  --accent: #ff6a00;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-orange-500);
+    color: #fff;
+  }
+  /* Scrollbar sutil */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-navy-600);
+    border-radius: 9999px;
+  }
+}
+
+/* ============================================================
+   UTILITÁRIOS
+   ============================================================ */
+@utility container-tf {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  max-width: 80rem;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.text-gradient-orange {
+  background: linear-gradient(
+    100deg,
+    var(--color-orange-400),
+    var(--color-orange-600)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Keyframes */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Respeita usuários que pedem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

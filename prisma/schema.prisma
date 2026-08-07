@@ -1,0 +1,242 @@
+// Schema Prisma — TeamFly Brasil (SQLite, banco em arquivo único)
+// Rode: npm run db:generate && npm run db:migrate && npm run db:seed
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ------------------------------------------------------------------
+// Autenticação / Administração
+// ------------------------------------------------------------------
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String // hash bcrypt
+  role      String   @default("ADMIN") // ADMIN | EDITOR
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Configurações do site (chave/valor) — textos e imagens editáveis
+// ------------------------------------------------------------------
+model Setting {
+  key       String   @id
+  value     String // texto ou JSON
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Eventos / Campeonatos
+// A modalidade é referenciada por slug (catálogo estático em src/lib/data/sports.ts)
+// ------------------------------------------------------------------
+model Championship {
+  id                   String   @id @default(cuid())
+  slug                 String   @unique
+  name                 String
+  modalitySlug         String
+  city                 String
+  state                String
+  venue                String?
+  date                 DateTime
+  time                 String?
+  registrationDeadline DateTime?
+  registrationFee      Float?
+  prize                String?
+  description          String?
+  organizer            String?
+  image                String?
+  video                String?
+  regulationPdf        String?
+  phone                String?
+  whatsapp             String?
+  site                 String?
+  instagram            String?
+  facebook             String?
+  status               String   @default("ATIVO") // ATIVO | FINALIZADO | RASCUNHO
+  featured             Boolean  @default(false)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([status])
+  @@index([modalitySlug])
+}
+
+// ------------------------------------------------------------------
+// Parceiros / Equipes
+// ------------------------------------------------------------------
+model Team {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  modalitySlug String
+  city         String
+  state        String
+  logo         String?
+  cover        String?
+  description  String?
+  instagram    String?
+  site         String?
+  video        String?
+  gallery      String   @default("[]") // JSON array de URLs
+  active       Boolean  @default(true)
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Atletas em destaque
+// ------------------------------------------------------------------
+model Athlete {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  modalitySlug String
+  city         String
+  state        String
+  team         String?
+  photo        String?
+  bio          String?
+  achievements String   @default("[]") // JSON array
+  sponsors     String   @default("[]") // JSON array
+  instagram    String?
+  video        String?
+  gallery      String   @default("[]") // JSON array
+  featured     Boolean  @default(true)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Depoimentos
+// ------------------------------------------------------------------
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  quote     String
+  avatar    String?
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Banners do carrossel da home
+// ------------------------------------------------------------------
+model Banner {
+  id        String   @id @default(cuid())
+  image     String
+  badge     String?
+  title     String?
+  subtitle  String?
+  tagline   String?
+  ctaLabel  String?
+  ctaHref   String?
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Planos de atendimento (página Serviços)
+// ------------------------------------------------------------------
+model Plan {
+  id        String   @id @default(cuid())
+  name      String
+  audience  String?
+  price     String?  @default("Sob consulta")
+  features  String   @default("[]") // JSON array
+  highlight Boolean  @default(false)
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Blocos de conteúdo editáveis
+// (differentials, services, process, sla, coverage, legal)
+// ------------------------------------------------------------------
+model ContentBlock {
+  id        String   @id @default(cuid())
+  section   String // differentials | services | process
+  icon      String?
+  title     String
+  text      String
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([section])
+}
+
+// ------------------------------------------------------------------
+// Galeria (fotos e vídeos)
+// ------------------------------------------------------------------
+model Media {
+  id           String   @id @default(cuid())
+  type         String   @default("PHOTO") // PHOTO | VIDEO
+  title        String?
+  url          String
+  thumbnail    String?
+  year         Int?
+  city         String?
+  modalitySlug String?
+  championship String?
+  createdAt    DateTime @default(now())
+
+  @@index([type])
+}
+
+// ------------------------------------------------------------------
+// Leads: orçamentos e contatos
+// ------------------------------------------------------------------
+model QuoteRequest {
+  id            String   @id @default(cuid())
+  name          String
+  company       String?
+  team          String?
+  document      String?
+  phone         String
+  whatsapp      String?
+  email         String
+  city          String
+  state         String
+  passengers    Int
+  origin        String
+  destination   String
+  departureDate DateTime?
+  returnDate    DateTime?
+  tripType      String   @default("Competição")
+  competition   String?
+  message       String?
+  status        String   @default("NOVO") // NOVO | EM_ANDAMENTO | RESPONDIDO | ARQUIVADO
+  createdAt     DateTime @default(now())
+
+  @@index([status])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  status    String   @default("NOVO")
+  createdAt DateTime @default(now())
+
+  @@index([status])
+}
