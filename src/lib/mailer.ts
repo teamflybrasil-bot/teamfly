@@ -13,11 +13,11 @@ function getTransporter(): Transporter | null {
   if (!isMailConfigured()) return null;
   if (transporter) return transporter;
   transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT || 465),
-    secure: process.env.SMTP_SECURE !== "false", // 465 = true
+    host: process.env.SMTP_HOST?.trim(),
+    port: Number((process.env.SMTP_PORT || "465").trim()),
+    secure: process.env.SMTP_SECURE?.trim() !== "false", // 465 = true
     auth: {
-      user: process.env.SMTP_USER,
+      user: process.env.SMTP_USER?.trim(),
       pass: process.env.SMTP_PASS,
     },
   });
