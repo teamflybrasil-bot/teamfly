@@ -16,7 +16,7 @@ export const siteConfig = {
   contact: {
     phone: "(17) 99136-9593",
     phoneRaw: "5517991369593",
-    email: "teamflybrasil@gmail.com",
+    email: "contato@teamflybrasil.com.br",
     whatsapp: "https://wa.me/5517991369593",
     address: "Bebedouro — SP · Atendimento Nacional",
   },
