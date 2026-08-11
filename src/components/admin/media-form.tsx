@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { Field, Input, Select } from "@/components/ui/field";
 import { ImageUpload } from "./image-upload";
 import { SubmitButton } from "./submit-button";
@@ -23,6 +23,8 @@ export interface MediaInitial {
 
 export function MediaForm({ initial = {} }: { initial?: MediaInitial }) {
   const [state, formAction] = useActionState(saveMedia, {});
+  const [type, setType] = useState(initial.type || "PHOTO");
+  const isVideo = type === "VIDEO";
   return (
     <form action={formAction} className="space-y-8">
       {initial.id && <input type="hidden" name="id" value={initial.id} />}
@@ -32,7 +34,7 @@ export function MediaForm({ initial = {} }: { initial?: MediaInitial }) {
         <h2 className="font-display text-lg">Mídia</h2>
         <div className="mt-4 grid gap-5 sm:grid-cols-2">
           <Field label="Tipo" htmlFor="type">
-            <Select id="type" name="type" defaultValue={initial.type || "PHOTO"}>
+            <Select id="type" name="type" value={type} onChange={(e) => setType(e.target.value)}>
               <option value="PHOTO">Foto</option>
               <option value="VIDEO">Vídeo</option>
             </Select>
@@ -40,7 +42,15 @@ export function MediaForm({ initial = {} }: { initial?: MediaInitial }) {
           <Field label="Título" htmlFor="title">
             <Input id="title" name="title" defaultValue={initial.title} />
           </Field>
-          <ImageUpload name="url" label="Arquivo / URL (foto ou link do vídeo)" defaultValue={initial.url} hint="1200 × 900 px (4:3)" className="sm:col-span-2" />
+          <ImageUpload
+            key={type}
+            name="url"
+            kind={isVideo ? "video" : "image"}
+            label={isVideo ? "Vídeo (arquivo ou link)" : "Foto (arquivo ou URL)"}
+            defaultValue={initial.url}
+            hint={isVideo ? "Envie um vídeo (MP4/WebM) ou cole um link" : "1200 × 900 px (4:3)"}
+            className="sm:col-span-2"
+          />
           <ImageUpload name="thumbnail" label="Miniatura (opcional, ideal para vídeos)" defaultValue={initial.thumbnail} hint="1200 × 900 px (4:3)" className="sm:col-span-2" />
           <Field label="Ano" htmlFor="year">
             <Input id="year" name="year" type="number" defaultValue={initial.year} placeholder="2026" />

@@ -86,9 +86,13 @@ export function AthleteForm({ initial = {} }: { initial?: AthleteInitial }) {
         <h2 className="font-display text-lg">Mídia</h2>
         <div className="mt-4 grid gap-5 sm:grid-cols-2">
           <ImageUpload name="photo" label="Foto principal" defaultValue={initial.photo} hint="800 × 1000 px (retrato 4:5)" />
-          <Field label="Vídeo (URL)" htmlFor="video">
-            <Input id="video" name="video" defaultValue={initial.video} placeholder="https://..." />
-          </Field>
+          <ImageUpload
+            name="video"
+            kind="video"
+            label="Vídeo"
+            defaultValue={initial.video}
+            hint="Envie um vídeo (MP4/WebM) do seu computador ou cole um link"
+          />
           <MultiImageUpload
             name="gallery"
             label="Galeria de fotos"
