@@ -21,6 +21,7 @@ export interface TeamInitial {
   description?: string;
   instagram?: string;
   site?: string;
+  video?: string;
   gallery?: string; // uma URL por linha
   active?: boolean;
   order?: string;
@@ -85,6 +86,14 @@ export function TeamForm({ initial = {} }: { initial?: TeamInitial }) {
             label="Demais fotos (carrossel)"
             hint="Envie os arquivos (JPG/PNG) do seu computador — pode selecionar vários de uma vez."
             defaultValue={initial.gallery}
+            className="sm:col-span-2"
+          />
+          <ImageUpload
+            name="video"
+            kind="video"
+            label="Vídeo (opcional)"
+            defaultValue={initial.video}
+            hint="Envie um vídeo (MP4/WebM) do parceiro ou cole um link"
             className="sm:col-span-2"
           />
         </div>

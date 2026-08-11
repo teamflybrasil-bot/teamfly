@@ -33,6 +33,7 @@ export default async function EditarParceiroPage({
     description: t.description ?? undefined,
     instagram: t.instagram ?? undefined,
     site: t.site ?? undefined,
+    video: t.video ?? undefined,
     gallery: galleryToText(t.gallery),
     active: t.active,
     order: String(t.order),

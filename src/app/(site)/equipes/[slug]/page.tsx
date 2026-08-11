@@ -7,6 +7,7 @@ import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { InstagramIcon } from "@/components/shared/social-icons";
 import { ImageCarousel } from "@/components/shared/image-carousel";
+import { VideoPlayer } from "@/components/shared/video-player";
 import { getSport } from "@/lib/data/sports";
 import { getTeamBySlug } from "@/server/data";
 
@@ -102,6 +103,13 @@ export default async function EquipePage({ params }: Params) {
                 </a>
               )}
             </div>
+
+            {t.video && (
+              <div className="mt-10">
+                <h2 className="mb-4 font-display text-2xl">Vídeo</h2>
+                <VideoPlayer src={t.video} />
+              </div>
+            )}
           </div>
         </Container>
       </section>

@@ -175,6 +175,7 @@ export async function saveTeam(
       description: optStr(formData, "description"),
       instagram: optStr(formData, "instagram"),
       site: optStr(formData, "site"),
+      video: optStr(formData, "video"),
       gallery: linesToJson(formData, "gallery"),
       active: bool(formData, "active"),
       order: intNum(formData, "order") ?? 0,
