@@ -17,6 +17,7 @@ import {
   PlaneTakeoff,
 } from "lucide-react";
 import { PageHero } from "@/components/shared/page-hero";
+import { VideoPlayer } from "@/components/shared/video-player";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
@@ -127,6 +128,13 @@ export default async function CampeonatoPage({ params }: Params) {
                   <span className="text-sm">
                     Regulamento em PDF disponível em breve.
                   </span>
+                </div>
+              )}
+
+              {c.video && (
+                <div className="mt-10">
+                  <h2 className="mb-4 font-display text-2xl">Vídeo</h2>
+                  <VideoPlayer src={c.video} />
                 </div>
               )}
 

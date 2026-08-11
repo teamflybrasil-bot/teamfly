@@ -103,9 +103,14 @@ export function ChampionshipForm({ initial = {} }: { initial?: ChampionshipIniti
         <div className="mt-4 grid gap-5 sm:grid-cols-2">
           <ImageUpload name="image" label="Imagem principal" defaultValue={initial.image} hint="1600 × 1000 px (16:10)" />
           <ImageUpload name="regulationPdf" label="Regulamento (PDF)" defaultValue={initial.regulationPdf} />
-          <Field label="Vídeo (URL)" htmlFor="video" className="sm:col-span-2">
-            <Input id="video" name="video" defaultValue={initial.video} placeholder="https://..." />
-          </Field>
+          <ImageUpload
+            name="video"
+            kind="video"
+            label="Vídeo"
+            defaultValue={initial.video}
+            hint="Envie um vídeo (MP4/WebM) do seu computador ou cole um link"
+            className="sm:col-span-2"
+          />
         </div>
       </section>
 

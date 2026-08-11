@@ -11,6 +11,9 @@ type TypeFilter = "TODOS" | "PHOTO" | "VIDEO";
 
 const PAGE_SIZE = 8;
 
+/** Detecta se a URL aponta para um arquivo de vídeo (sem miniatura de imagem). */
+const isVideoSrc = (u: string) => /\.(mp4|webm|mov|m4v)(\?|$)/i.test(u);
+
 export function GalleryExplorer({
   items,
   sports,
@@ -130,14 +133,24 @@ export function GalleryExplorer({
             transition={{ duration: 0.4, delay: (i % PAGE_SIZE) * 0.04 }}
             className="group relative mb-4 block w-full overflow-hidden rounded-2xl"
           >
-            <Image
-              src={item.thumbnail}
-              alt={item.title}
-              width={600}
-              height={450}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            {item.type === "VIDEO" && isVideoSrc(item.thumbnail) ? (
+              <video
+                src={item.thumbnail}
+                muted
+                playsInline
+                preload="metadata"
+                className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <Image
+                src={item.thumbnail}
+                alt={item.title}
+                width={600}
+                height={450}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            )}
             <div className="absolute inset-0 flex items-end bg-gradient-to-t from-navy-950/80 via-transparent to-transparent p-4 opacity-0 transition-opacity group-hover:opacity-100">
               <span className="text-left text-sm font-medium text-white">
                 {item.title}
@@ -225,7 +238,7 @@ export function GalleryExplorer({
                   src={current.src}
                   controls
                   autoPlay
-                  className="max-h-[80vh] w-full rounded-2xl"
+                  className="mx-auto max-h-[80vh] w-auto max-w-full rounded-2xl"
                 />
               ) : (
                 <div className="relative aspect-video w-full">
