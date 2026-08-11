@@ -53,7 +53,7 @@ export function VideoPlayer({
       playsInline
       preload="metadata"
       className={cn(
-        "w-full rounded-2xl border border-border bg-black",
+        "max-h-[75vh] w-auto max-w-full rounded-2xl border border-border bg-black",
         className,
       )}
     />
