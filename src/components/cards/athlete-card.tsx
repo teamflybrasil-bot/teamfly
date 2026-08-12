@@ -41,11 +41,15 @@ export function AthleteCard({ athlete }: { athlete: Athlete }) {
             {athlete.team}
           </p>
         )}
-        {athlete.instagram && (
-          <span className="mt-2 inline-flex items-center gap-1 text-xs text-white/60">
-            <InstagramIcon className="size-3.5 text-[#E4405F]" /> Perfil
-          </span>
-        )}
+        {/* Espaço do Instagram sempre reservado (fica em branco quando não há),
+            para modalidade, nome e cidade ficarem alinhados entre os cards. */}
+        <span className="mt-2 flex h-4 items-center gap-1 text-xs text-white/60">
+          {athlete.instagram && (
+            <>
+              <InstagramIcon className="size-3.5 text-[#E4405F]" /> Perfil
+            </>
+          )}
+        </span>
       </div>
     </Link>
   );
