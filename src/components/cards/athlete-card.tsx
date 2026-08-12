@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { MapPin, Users } from "lucide-react";
 import { InstagramIcon } from "@/components/shared/social-icons";
 import type { Athlete } from "@/types";
 import { getSport } from "@/lib/data/sports";
@@ -35,6 +35,12 @@ export function AthleteCard({ athlete }: { athlete: Athlete }) {
           <MapPin className="size-3.5" />
           {athlete.city} — {athlete.state}
         </p>
+        {athlete.team && (
+          <p className="mt-1 flex items-center gap-1.5 text-sm text-white/70">
+            <Users className="size-3.5" />
+            {athlete.team}
+          </p>
+        )}
         {athlete.instagram && (
           <span className="mt-2 inline-flex items-center gap-1 text-xs text-white/60">
             <InstagramIcon className="size-3.5 text-[#E4405F]" /> Perfil
