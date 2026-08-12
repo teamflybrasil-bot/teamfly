@@ -25,7 +25,6 @@ import {
   InstagramIcon,
   WhatsappIcon,
 } from "@/components/shared/social-icons";
-import { getSport } from "@/lib/data/sports";
 import { getChampionshipBySlug } from "@/server/data";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
@@ -56,7 +55,7 @@ export default async function CampeonatoPage({ params }: Params) {
   const c = await getChampionshipBySlug(slug);
   if (!c) notFound();
 
-  const sport = getSport(c.sportSlug);
+  const sport = c.sport;
   const status = statusMap[c.status];
   const orcamentoHref = `/orcamento?competicao=${encodeURIComponent(c.name)}`;
 

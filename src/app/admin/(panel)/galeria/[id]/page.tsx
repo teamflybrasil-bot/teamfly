@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { MediaForm } from "@/components/admin/media-form";
+import { getModalities } from "@/server/data";
 
 export default async function EditarMidiaPage({
   params,
@@ -12,6 +13,7 @@ export default async function EditarMidiaPage({
   const { id } = await params;
   const m = await prisma.media.findUnique({ where: { id } });
   if (!m) notFound();
+  const modalities = await getModalities();
 
   return (
     <div>
@@ -20,6 +22,7 @@ export default async function EditarMidiaPage({
       </Link>
       <h1 className="mt-3 mb-8 font-display text-3xl">Editar mídia</h1>
       <MediaForm
+        modalities={modalities}
         initial={{
           id: m.id,
           type: m.type,

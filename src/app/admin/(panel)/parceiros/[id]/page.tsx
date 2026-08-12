@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { TeamForm, type TeamInitial } from "@/components/admin/team-form";
+import { getModalities } from "@/server/data";
 
 function galleryToText(json: string): string {
   try {
@@ -21,6 +22,7 @@ export default async function EditarParceiroPage({
   const { id } = await params;
   const t = await prisma.team.findUnique({ where: { id } });
   if (!t) notFound();
+  const modalities = await getModalities();
 
   const initial: TeamInitial = {
     id: t.id,
@@ -49,7 +51,7 @@ export default async function EditarParceiroPage({
       </Link>
       <h1 className="mt-3 font-display text-3xl">Editar parceiro</h1>
       <p className="mt-1 mb-8 text-muted-foreground">{t.name}</p>
-      <TeamForm initial={initial} />
+      <TeamForm modalities={modalities} initial={initial} />
     </div>
   );
 }

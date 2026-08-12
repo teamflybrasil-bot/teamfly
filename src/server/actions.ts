@@ -608,3 +608,74 @@ export async function saveSettings(
   revalidatePath("/", "layout");
   redirect(`${back}${back.includes("?") ? "&" : "?"}ok=1`);
 }
+
+/* ---------------------------- Modalidades --------------------------- */
+
+export async function saveModality(
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  try {
+    await requireSession();
+    const existingSlug = str(formData, "slug"); // preenchido ao editar
+    const name = str(formData, "name");
+    if (!name) return { error: "Informe o nome da modalidade." };
+    const data = {
+      name,
+      icon: optStr(formData, "icon") || "Trophy",
+      description: optStr(formData, "description"),
+      order: num(formData, "order") ?? 0,
+      active: formData.get("active") != null,
+    };
+    if (existingSlug) {
+      await prisma.modality.update({ where: { slug: existingSlug }, data });
+    } else {
+      let slug = slugify(name) || "modalidade";
+      let i = 2;
+      while (await prisma.modality.findUnique({ where: { slug } })) {
+        slug = `${slugify(name)}-${i++}`;
+      }
+      await prisma.modality.create({ data: { slug, ...data } });
+    }
+  } catch (e) {
+    return { error: friendly(e) };
+  }
+  revalidatePath("/esportes");
+  revalidatePath("/");
+  revalidatePath("/admin/esportes");
+  redirect("/admin/esportes");
+}
+
+export async function deleteModality(formData: FormData) {
+  await requireSession();
+  const slug = str(formData, "id");
+  if (!slug) return;
+  const [ch, tm, at] = await Promise.all([
+    prisma.championship.count({ where: { modalitySlug: slug } }),
+    prisma.team.count({ where: { modalitySlug: slug } }),
+    prisma.athlete.count({ where: { modalitySlug: slug } }),
+  ]);
+  if (ch + tm + at > 0) {
+    throw new Error(
+      `Não é possível excluir: esta modalidade está em uso (${ch} evento(s), ${tm} parceiro(s), ${at} atleta(s)). Desative-a em vez de excluir.`,
+    );
+  }
+  await prisma.modality.delete({ where: { slug } });
+  revalidatePath("/esportes");
+  revalidatePath("/admin/esportes");
+}
+
+export async function toggleModalityActive(formData: FormData) {
+  await requireSession();
+  const slug = str(formData, "id");
+  const current = await prisma.modality.findUnique({ where: { slug } });
+  if (current) {
+    await prisma.modality.update({
+      where: { slug },
+      data: { active: !current.active },
+    });
+  }
+  revalidatePath("/esportes");
+  revalidatePath("/");
+  revalidatePath("/admin/esportes");
+}

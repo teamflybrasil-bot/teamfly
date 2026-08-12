@@ -7,8 +7,7 @@ import { Reveal } from "@/components/shared/reveal";
 import { ChampionshipCard } from "@/components/cards/championship-card";
 import { ButtonLink } from "@/components/ui/button";
 import { SportIcon } from "@/components/shared/sport-icon";
-import { getSport } from "@/lib/data/sports";
-import { getChampionshipsByModality } from "@/server/data";
+import { getChampionshipsByModality, getModalityMap } from "@/server/data";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +15,7 @@ type Params = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const sport = getSport(slug);
+  const sport = (await getModalityMap()).get(slug);
   if (!sport) return { title: "Modalidade não encontrada" };
   return {
     title: `${sport.name} — Campeonatos`,
@@ -26,7 +25,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function ModalidadePage({ params }: Params) {
   const { slug } = await params;
-  const sport = getSport(slug);
+  const sport = (await getModalityMap()).get(slug);
   if (!sport) notFound();
 
   const championships = await getChampionshipsByModality(slug);

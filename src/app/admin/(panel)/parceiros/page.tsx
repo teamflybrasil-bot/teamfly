@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Plus, Pencil, Trash2, Power, PowerOff, Handshake } from "lucide-react";
 import { prisma } from "@/lib/prisma";
-import { getSport } from "@/lib/data/sports";
+import { getModalityMap } from "@/server/data";
 import { ActionForm } from "@/components/admin/action-form";
 import { deleteTeam, toggleTeamActive } from "@/server/actions";
 
@@ -9,6 +9,7 @@ export default async function AdminParceirosPage() {
   const teams = await prisma.team.findMany({
     orderBy: [{ order: "asc" }, { createdAt: "desc" }],
   });
+  const modMap = await getModalityMap();
 
   return (
     <div>
@@ -49,7 +50,7 @@ export default async function AdminParceirosPage() {
             </thead>
             <tbody className="divide-y divide-border">
               {teams.map((t) => {
-                const sport = getSport(t.modalitySlug);
+                const sport = modMap.get(t.modalitySlug);
                 return (
                   <tr key={t.id} className="hover:bg-muted/30">
                     <td className="px-5 py-3">

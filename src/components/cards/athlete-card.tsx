@@ -3,10 +3,9 @@ import Link from "next/link";
 import { MapPin, Users } from "lucide-react";
 import { InstagramIcon } from "@/components/shared/social-icons";
 import type { Athlete } from "@/types";
-import { getSport } from "@/lib/data/sports";
 
 export function AthleteCard({ athlete }: { athlete: Athlete }) {
-  const sport = getSport(athlete.sportSlug);
+  const sport = athlete.sport;
 
   return (
     <Link

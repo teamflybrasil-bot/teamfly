@@ -8,7 +8,7 @@ import { MultiImageUpload } from "./multi-image-upload";
 import { SubmitButton } from "./submit-button";
 import { FormError } from "./form-error";
 import { saveAthlete } from "@/server/actions";
-import { sports } from "@/lib/data/sports";
+import type { Sport } from "@/types";
 
 export interface AthleteInitial {
   id?: string;
@@ -28,7 +28,13 @@ export interface AthleteInitial {
   active?: boolean;
 }
 
-export function AthleteForm({ initial = {} }: { initial?: AthleteInitial }) {
+export function AthleteForm({
+  initial = {},
+  modalities,
+}: {
+  initial?: AthleteInitial;
+  modalities: Sport[];
+}) {
   const [state, formAction] = useActionState(saveAthlete, {});
   return (
     <form action={formAction} className="space-y-8">
@@ -43,7 +49,7 @@ export function AthleteForm({ initial = {} }: { initial?: AthleteInitial }) {
           </Field>
           <Field label="Modalidade" htmlFor="modalitySlug">
             <Select id="modalitySlug" name="modalitySlug" defaultValue={initial.modalitySlug || "futebol"}>
-              {sports.map((s) => (
+              {modalities.map((s) => (
                 <option key={s.slug} value={s.slug}>{s.name}</option>
               ))}
             </Select>

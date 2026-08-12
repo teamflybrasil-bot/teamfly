@@ -3,7 +3,6 @@ import Link from "next/link";
 import { CalendarDays, MapPin, ArrowUpRight } from "lucide-react";
 import type { Championship } from "@/types";
 import { Badge } from "@/components/ui/badge";
-import { getSport } from "@/lib/data/sports";
 import { formatDate } from "@/lib/utils";
 
 const statusLabel: Record<Championship["status"], { label: string; variant: "success" | "muted" | "orange" }> = {
@@ -13,7 +12,7 @@ const statusLabel: Record<Championship["status"], { label: string; variant: "suc
 };
 
 export function ChampionshipCard({ championship }: { championship: Championship }) {
-  const sport = getSport(championship.sportSlug);
+  const sport = championship.sport;
   const status = statusLabel[championship.status];
 
   return (

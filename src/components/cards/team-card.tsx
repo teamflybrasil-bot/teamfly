@@ -2,10 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { MapPin, ArrowUpRight } from "lucide-react";
 import type { Team } from "@/types";
-import { getSport } from "@/lib/data/sports";
 
 export function TeamCard({ team }: { team: Team }) {
-  const sport = getSport(team.sportSlug);
+  const sport = team.sport;
 
   return (
     <Link

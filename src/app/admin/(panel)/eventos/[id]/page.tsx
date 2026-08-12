@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { getModalities } from "@/server/data";
 import {
   ChampionshipForm,
   type ChampionshipInitial,
@@ -20,6 +21,7 @@ export default async function EditarEventoPage({
   const { id } = await params;
   const e = await prisma.championship.findUnique({ where: { id } });
   if (!e) notFound();
+  const modalities = await getModalities();
 
   const initial: ChampionshipInitial = {
     id: e.id,
@@ -56,7 +58,7 @@ export default async function EditarEventoPage({
       </Link>
       <h1 className="mt-3 font-display text-3xl">Editar evento</h1>
       <p className="mt-1 mb-8 text-muted-foreground">{e.name}</p>
-      <ChampionshipForm initial={initial} />
+      <ChampionshipForm modalities={modalities} initial={initial} />
     </div>
   );
 }

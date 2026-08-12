@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { TeamForm } from "@/components/admin/team-form";
+import { getModalities } from "@/server/data";
 
-export default function NovoParceiroPage() {
+export default async function NovoParceiroPage() {
+  const modalities = await getModalities();
   return (
     <div>
       <Link
@@ -15,7 +17,7 @@ export default function NovoParceiroPage() {
       <p className="mt-1 mb-8 text-muted-foreground">
         Cadastre uma equipe, clube ou organizador parceiro.
       </p>
-      <TeamForm />
+      <TeamForm modalities={modalities} />
     </div>
   );
 }

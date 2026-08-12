@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { ChampionshipForm } from "@/components/admin/championship-form";
+import { getModalities } from "@/server/data";
 
-export default function NovoEventoPage() {
+export default async function NovoEventoPage() {
+  const modalities = await getModalities();
   return (
     <div>
       <Link
@@ -15,7 +17,7 @@ export default function NovoEventoPage() {
       <p className="mt-1 mb-8 text-muted-foreground">
         Preencha os dados do campeonato ou competição.
       </p>
-      <ChampionshipForm />
+      <ChampionshipForm modalities={modalities} />
     </div>
   );
 }

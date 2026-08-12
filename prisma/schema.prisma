@@ -33,6 +33,18 @@ model Setting {
   updatedAt DateTime @updatedAt
 }
 
+// Modalidades esportivas (catálogo gerenciável no painel).
+// O slug é referenciado por Championship/Team/Athlete via `modalitySlug`.
+model Modality {
+  slug        String   @id
+  name        String
+  icon        String   @default("Trophy")
+  description String?
+  order       Int      @default(0)
+  active      Boolean  @default(true)
+  updatedAt   DateTime @updatedAt
+}
+
 // ------------------------------------------------------------------
 // Eventos / Campeonatos
 // A modalidade é referenciada por slug (catálogo estático em src/lib/data/sports.ts)

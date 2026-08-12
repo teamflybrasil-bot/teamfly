@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Plus, Pencil, Trash2, Power, PowerOff, CalendarDays } from "lucide-react";
 import { prisma } from "@/lib/prisma";
-import { getSport } from "@/lib/data/sports";
+import { getModalityMap } from "@/server/data";
 import { formatDate } from "@/lib/utils";
 import { ActionForm } from "@/components/admin/action-form";
 import { deleteChampionship, toggleChampionshipStatus } from "@/server/actions";
@@ -14,6 +14,7 @@ const statusStyle: Record<string, string> = {
 
 export default async function AdminEventosPage() {
   const events = await prisma.championship.findMany({ orderBy: { date: "asc" } });
+  const modMap = await getModalityMap();
 
   return (
     <div>
@@ -55,7 +56,7 @@ export default async function AdminEventosPage() {
             </thead>
             <tbody className="divide-y divide-border">
               {events.map((e) => {
-                const sport = getSport(e.modalitySlug);
+                const sport = modMap.get(e.modalitySlug);
                 return (
                   <tr key={e.id} className="hover:bg-muted/30">
                     <td className="px-5 py-3">

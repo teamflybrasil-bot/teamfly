@@ -7,7 +7,7 @@ import { ImageUpload } from "./image-upload";
 import { SubmitButton } from "./submit-button";
 import { FormError } from "./form-error";
 import { saveChampionship } from "@/server/actions";
-import { sports } from "@/lib/data/sports";
+import type { Sport } from "@/types";
 
 export interface ChampionshipInitial {
   id?: string;
@@ -34,7 +34,13 @@ export interface ChampionshipInitial {
   featured?: boolean;
 }
 
-export function ChampionshipForm({ initial = {} }: { initial?: ChampionshipInitial }) {
+export function ChampionshipForm({
+  initial = {},
+  modalities,
+}: {
+  initial?: ChampionshipInitial;
+  modalities: Sport[];
+}) {
   const [state, formAction] = useActionState(saveChampionship, {});
   return (
     <form action={formAction} className="space-y-8">
@@ -49,7 +55,7 @@ export function ChampionshipForm({ initial = {} }: { initial?: ChampionshipIniti
           </Field>
           <Field label="Modalidade" htmlFor="modalitySlug">
             <Select id="modalitySlug" name="modalitySlug" defaultValue={initial.modalitySlug || "futebol"}>
-              {sports.map((s) => (
+              {modalities.map((s) => (
                 <option key={s.slug} value={s.slug}>{s.name}</option>
               ))}
             </Select>

@@ -7,7 +7,7 @@ import { ImageUpload } from "./image-upload";
 import { SubmitButton } from "./submit-button";
 import { FormError } from "./form-error";
 import { saveMedia } from "@/server/actions";
-import { sports } from "@/lib/data/sports";
+import type { Sport } from "@/types";
 
 export interface MediaInitial {
   id?: string;
@@ -21,7 +21,13 @@ export interface MediaInitial {
   championship?: string;
 }
 
-export function MediaForm({ initial = {} }: { initial?: MediaInitial }) {
+export function MediaForm({
+  initial = {},
+  modalities,
+}: {
+  initial?: MediaInitial;
+  modalities: Sport[];
+}) {
   const [state, formAction] = useActionState(saveMedia, {});
   const [type, setType] = useState(initial.type || "PHOTO");
   const isVideo = type === "VIDEO";
@@ -61,7 +67,7 @@ export function MediaForm({ initial = {} }: { initial?: MediaInitial }) {
           <Field label="Modalidade" htmlFor="modalitySlug">
             <Select id="modalitySlug" name="modalitySlug" defaultValue={initial.modalitySlug || ""}>
               <option value="">— Nenhuma —</option>
-              {sports.map((s) => (
+              {modalities.map((s) => (
                 <option key={s.slug} value={s.slug}>{s.name}</option>
               ))}
             </Select>

@@ -19,6 +19,8 @@ export interface Championship {
   slug: string;
   name: string;
   sportSlug: string;
+  /** Modalidade resolvida (nome/ícone) — preenchida na camada de dados. */
+  sport?: Sport;
   city: string;
   state: string;
   venue: string;
@@ -46,6 +48,7 @@ export interface Athlete {
   slug: string;
   name: string;
   sportSlug: string;
+  sport?: Sport;
   city: string;
   state: string;
   team?: string;
@@ -64,6 +67,7 @@ export interface Team {
   slug: string;
   name: string;
   sportSlug: string;
+  sport?: Sport;
   city: string;
   state: string;
   logo: string;

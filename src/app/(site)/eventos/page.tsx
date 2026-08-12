@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/shared/page-hero";
 import { Container } from "@/components/ui/container";
 import { EventsExplorer } from "@/components/events/events-explorer";
-import { getChampionships } from "@/server/data";
-import { sports } from "@/lib/data/sports";
+import { getChampionships, getModalities } from "@/server/data";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +14,7 @@ export const metadata: Metadata = {
 
 export default async function EventosPage() {
   const championships = await getChampionships();
+  const sports = await getModalities();
   return (
     <>
       <PageHero

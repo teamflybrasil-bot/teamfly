@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { AthleteForm } from "@/components/admin/athlete-form";
+import { getModalities } from "@/server/data";
 
 function jsonToLines(json: string): string {
   try {
@@ -21,6 +22,7 @@ export default async function EditarAtletaPage({
   const { id } = await params;
   const a = await prisma.athlete.findUnique({ where: { id } });
   if (!a) notFound();
+  const modalities = await getModalities();
 
   return (
     <div>
@@ -29,6 +31,7 @@ export default async function EditarAtletaPage({
       </Link>
       <h1 className="mt-3 mb-8 font-display text-3xl">Editar atleta</h1>
       <AthleteForm
+        modalities={modalities}
         initial={{
           id: a.id,
           name: a.name,

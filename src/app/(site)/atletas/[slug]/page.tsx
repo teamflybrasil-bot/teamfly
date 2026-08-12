@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { InstagramIcon } from "@/components/shared/social-icons";
 import { ImageCarousel } from "@/components/shared/image-carousel";
 import { VideoPlayer } from "@/components/shared/video-player";
-import { getSport } from "@/lib/data/sports";
 import { getAthleteBySlug } from "@/server/data";
 
 export const dynamic = "force-dynamic";
@@ -30,7 +29,7 @@ export default async function AtletaPage({ params }: Params) {
   const a = await getAthleteBySlug(slug);
   if (!a) notFound();
 
-  const sport = getSport(a.sportSlug);
+  const sport = a.sport;
   const images = [a.photo, ...a.gallery].filter(
     (src, i, arr): src is string => Boolean(src) && arr.indexOf(src) === i,
   );

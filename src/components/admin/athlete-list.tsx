@@ -2,13 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Plus, Pencil, Trash2, Power, PowerOff, Star } from "lucide-react";
 import { prisma } from "@/lib/prisma";
-import { getSport } from "@/lib/data/sports";
+import { getModalityMap } from "@/server/data";
 import { ActionForm } from "./action-form";
 import { deleteAthlete, toggleAthleteActive } from "@/server/actions";
 
 /** Lista editável dos atletas em destaque (embutível no menu Home). */
 export async function AthleteList() {
   const athletes = await prisma.athlete.findMany({ orderBy: { createdAt: "desc" } });
+  const modMap = await getModalityMap();
 
   return (
     <section className="rounded-2xl border border-border bg-card p-6">
@@ -32,7 +33,7 @@ export async function AthleteList() {
           </p>
         ) : (
           athletes.map((a) => {
-            const sport = getSport(a.modalitySlug);
+            const sport = modMap.get(a.modalitySlug);
             return (
               <div key={a.id} className="flex items-center gap-3 rounded-xl border border-border p-3">
                 <div className="relative size-12 shrink-0 overflow-hidden rounded-lg bg-muted">

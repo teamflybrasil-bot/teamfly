@@ -1,36 +1,83 @@
 import Link from "next/link";
-import { CalendarDays, Trophy } from "lucide-react";
-import { sports } from "@/lib/data/sports";
+import { Plus, Pencil, Power, PowerOff, Trash2 } from "lucide-react";
+import { SportIcon } from "@/components/shared/sport-icon";
+import { ActionForm } from "@/components/admin/action-form";
+import { getAllModalities } from "@/server/data";
+import { deleteModality, toggleModalityActive } from "@/server/actions";
 
-export default function AdminEsportesPage() {
+export const dynamic = "force-dynamic";
+
+export default async function AdminEsportesPage() {
+  const modalities = await getAllModalities();
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="font-display text-3xl">Esportes</h1>
-        <p className="mt-1 text-muted-foreground">
-          A lista de modalidades é padrão do site. Os campeonatos de cada
-          modalidade são gerenciados em Eventos.
-        </p>
-      </div>
-
-      <div className="rounded-2xl border border-border bg-card p-6">
-        <div className="flex items-center gap-3">
-          <Trophy className="size-6 text-orange-500" />
-          <h3 className="font-display text-lg">{sports.length} modalidades atendidas</h3>
-        </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {sports.map((s) => (
-            <span key={s.slug} className="rounded-full bg-muted px-3 py-1 text-sm">
-              {s.name}
-            </span>
-          ))}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="font-display text-3xl">Esportes / Modalidades</h1>
+          <p className="mt-1 text-muted-foreground">
+            Gerencie as modalidades atendidas. Elas aparecem no site e nas
+            opções ao cadastrar atletas, eventos e parceiros.
+          </p>
         </div>
         <Link
-          href="/admin/eventos"
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-orange-600"
+          href="/admin/esportes/nova"
+          className="inline-flex shrink-0 items-center gap-2 rounded-full bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600"
         >
-          <CalendarDays className="size-4" /> Gerenciar campeonatos (Eventos)
+          <Plus className="size-4" /> Adicionar modalidade
         </Link>
+      </div>
+
+      <div className="space-y-2">
+        {modalities.map((m) => (
+          <div
+            key={m.slug}
+            className="flex items-center gap-3 rounded-xl border border-border bg-card p-3"
+          >
+            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-orange-500/10 text-orange-500">
+              <SportIcon name={m.icon} className="size-6" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="font-medium">{m.name}</p>
+              <p className="truncate text-xs text-muted-foreground">
+                {m.description || m.slug}
+              </p>
+            </div>
+            <span
+              className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ${
+                m.active
+                  ? "bg-emerald-500/10 text-emerald-600"
+                  : "bg-muted text-muted-foreground"
+              }`}
+            >
+              {m.active ? "Ativa" : "Inativa"}
+            </span>
+            <div className="flex shrink-0 items-center gap-2">
+              <ActionForm
+                action={toggleModalityActive}
+                id={m.slug}
+                title={m.active ? "Desativar" : "Ativar"}
+              >
+                {m.active ? <PowerOff className="size-4" /> : <Power className="size-4" />}
+              </ActionForm>
+              <Link
+                href={`/admin/esportes/${m.slug}`}
+                title="Editar"
+                className="grid size-9 place-items-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-orange-500/40 hover:text-orange-500"
+              >
+                <Pencil className="size-4" />
+              </Link>
+              <ActionForm
+                action={deleteModality}
+                id={m.slug}
+                confirm={`Excluir a modalidade "${m.name}"? (só é possível se não estiver em uso por eventos, parceiros ou atletas)`}
+                title="Excluir"
+                className="hover:border-red-500/40 hover:text-red-500"
+              >
+                <Trash2 className="size-4" />
+              </ActionForm>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { AthleteForm } from "@/components/admin/athlete-form";
+import { getModalities } from "@/server/data";
 
-export default function NovoAtletaPage() {
+export default async function NovoAtletaPage() {
+  const modalities = await getModalities();
   return (
     <div>
       <Link href="/admin/home" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="size-4" /> Voltar
       </Link>
       <h1 className="mt-3 mb-8 font-display text-3xl">Novo atleta</h1>
-      <AthleteForm />
+      <AthleteForm modalities={modalities} />
     </div>
   );
 }

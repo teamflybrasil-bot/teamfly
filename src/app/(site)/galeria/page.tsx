@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/shared/page-hero";
 import { Container } from "@/components/ui/container";
 import { GalleryExplorer } from "@/components/gallery/gallery-explorer";
-import { getGallery, getGalleryYears } from "@/server/data";
-import { sports } from "@/lib/data/sports";
+import { getGallery, getGalleryYears, getModalities } from "@/server/data";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +15,7 @@ export const metadata: Metadata = {
 export default async function GaleriaPage() {
   const galleryItems = await getGallery();
   const galleryYears = await getGalleryYears();
+  const sports = await getModalities();
   return (
     <>
       <PageHero

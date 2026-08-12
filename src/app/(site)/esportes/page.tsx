@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/shared/page-hero";
 import { Container } from "@/components/ui/container";
 import { SportsGrid } from "@/components/sports/sports-grid";
-import { sports } from "@/lib/data/sports";
-import { getActiveChampionships } from "@/server/data";
+import { getActiveChampionships, getModalities } from "@/server/data";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +14,7 @@ export const metadata: Metadata = {
 
 export default async function EsportesPage() {
   const active = await getActiveChampionships();
+  const sports = await getModalities();
   const counts = active.reduce<Record<string, number>>((acc, c) => {
     acc[c.sportSlug] = (acc[c.sportSlug] ?? 0) + 1;
     return acc;

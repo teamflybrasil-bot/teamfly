@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { InstagramIcon } from "@/components/shared/social-icons";
 import { ImageCarousel } from "@/components/shared/image-carousel";
 import { VideoPlayer } from "@/components/shared/video-player";
-import { getSport } from "@/lib/data/sports";
 import { getTeamBySlug } from "@/server/data";
 
 export const dynamic = "force-dynamic";
@@ -31,7 +30,7 @@ export default async function EquipePage({ params }: Params) {
   const t = await getTeamBySlug(slug);
   if (!t) notFound();
 
-  const sport = getSport(t.sportSlug);
+  const sport = t.sport;
 
   // Carrossel: Foto 2 (capa) primeiro, depois as demais fotos. A Foto 1 (logo)
   // fica no quadrado de destaque e NÃO entra no carrossel.
