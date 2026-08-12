@@ -5,7 +5,6 @@ import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { ServicesGrid } from "@/components/company/services-grid";
-import { Plans } from "@/components/company/plans";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { FleetImages } from "@/components/shared/fleet-images";
 import { getSettings, getContentBlocks } from "@/server/data";
@@ -114,20 +113,6 @@ export default async function ServicosPage() {
                 </div>
               </Reveal>
             ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Planos */}
-      <section className="py-24">
-        <Container>
-          <SectionHeading
-            eyebrow="Planos de atendimento"
-            title="Pacotes sob medida"
-            description="Do time amador à federação, um plano para cada tamanho de delegação."
-          />
-          <div className="mt-16">
-            <Plans />
           </div>
         </Container>
       </section>
