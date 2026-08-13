@@ -45,13 +45,27 @@ export function BannerCarousel({
   const b = banners[index];
 
   return (
-    <section className="relative overflow-hidden bg-navy-950 text-white">
-      {/* Brilhos decorativos */}
-      <div className="pointer-events-none absolute -right-40 top-1/4 size-[36rem] rounded-full bg-orange-500/20 blur-3xl" />
-      <div className="pointer-events-none absolute -left-40 bottom-0 size-[28rem] rounded-full bg-orange-500/10 blur-3xl" />
+    <section className="relative flex min-h-[88vh] items-center overflow-hidden bg-navy-950 text-white">
+      {/* Imagem estática cinematográfica, sombreada (sem bordas) */}
+      {staticImage && (
+        <div className="absolute inset-0">
+          <Image
+            src={staticImage}
+            alt="TeamFly Brasil"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          {/* Sombreamento: escurece a esquerda (área do texto) e as bordas */}
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 from-5% via-navy-950/85 via-45% to-navy-950/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/50" />
+        </div>
+      )}
+      <div className="pointer-events-none absolute -right-40 top-1/4 size-[36rem] rounded-full bg-orange-500/15 blur-3xl" />
 
-      <div className="relative mx-auto grid min-h-[86vh] w-full max-w-7xl items-center gap-10 px-6 py-20 lg:grid-cols-2 lg:gap-16">
-        {/* Texto rotativo (esquerda) */}
+      {/* Texto rotativo (esquerda) */}
+      <div className="relative mx-auto w-full max-w-7xl px-6 py-24">
         <AnimatePresence mode="wait">
           <motion.div
             key={`content-${b.id}`}
@@ -59,6 +73,7 @@ export function BannerCarousel({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
+            className="max-w-2xl"
           >
             {b.badge && (
               <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm font-medium text-white/80 backdrop-blur">
@@ -90,23 +105,6 @@ export function BannerCarousel({
             </div>
           </motion.div>
         </AnimatePresence>
-
-        {/* Imagem estática (direita) */}
-        {staticImage && (
-          <div className="relative order-first lg:order-last">
-            <div className="pointer-events-none absolute inset-0 -z-10 scale-90 rounded-full bg-orange-500/20 blur-2xl" />
-            <div className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-full border-4 border-white/10 shadow-premium">
-              <Image
-                src={staticImage}
-                alt="TeamFly Brasil"
-                fill
-                priority
-                sizes="(max-width: 1024px) 75vw, 480px"
-                className="object-cover"
-              />
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Controles do texto */}
@@ -116,7 +114,7 @@ export function BannerCarousel({
             type="button"
             onClick={() => go(-1)}
             aria-label="Anterior"
-            className="absolute left-4 top-1/2 z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 lg:grid"
+            className="absolute left-4 top-1/2 z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:grid"
           >
             <ChevronLeft className="size-6" />
           </button>
@@ -124,7 +122,7 @@ export function BannerCarousel({
             type="button"
             onClick={() => go(1)}
             aria-label="Próximo"
-            className="absolute right-4 top-1/2 z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 lg:grid"
+            className="absolute right-4 top-1/2 z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:grid"
           >
             <ChevronRight className="size-6" />
           </button>
