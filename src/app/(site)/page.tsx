@@ -4,7 +4,7 @@ import { StatsSection } from "@/components/home/stats-section";
 import { FeaturedAthletes } from "@/components/home/featured-athletes";
 import { CtaBand } from "@/components/home/cta-band";
 import { siteConfig } from "@/lib/site";
-import { getBanners } from "@/server/data";
+import { getBanners, getSettings } from "@/server/data";
 
 export const dynamic = "force-dynamic";
 
@@ -35,10 +35,11 @@ function OrganizationSchema() {
 
 export default async function HomePage() {
   const banners = await getBanners();
+  const settings = await getSettings();
   return (
     <>
       <OrganizationSchema />
-      <BannerCarousel banners={banners} />
+      <BannerCarousel banners={banners} staticImage={settings["home.heroImage"]} />
       <Partners />
       <StatsSection />
       <FeaturedAthletes />

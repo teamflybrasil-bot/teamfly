@@ -17,6 +17,8 @@ export interface SettingField {
 
 /** Definição dos campos editáveis, agrupados para a tela do admin. */
 export const settingFields: SettingField[] = [
+  // Home
+  { key: "home.heroImage", label: "Imagem fixa do banner", group: "Home", type: "image", help: "Aparece à direita do banner da home (o texto continua girando à esquerda). Imagem quadrada, ex.: 900 × 900 px — sem texto." },
   // A Empresa
   { key: "about.historia", label: "Nossa história", group: "A Empresa", type: "textarea", help: "Separe parágrafos com uma linha em branco." },
   { key: "about.missao", label: "Missão", group: "A Empresa", type: "textarea" },
@@ -42,6 +44,7 @@ export const settingFields: SettingField[] = [
 
 /** Valores padrão (fallback quando não há registro no banco). */
 export const defaultSettings: Record<string, string> = {
+  "home.heroImage": "/brand/icon.png",
   "hero.badge": siteConfig.positioning,
   "hero.title": "A logística que leva sua equipe *ao pódio.*",
   "hero.subtitle":
