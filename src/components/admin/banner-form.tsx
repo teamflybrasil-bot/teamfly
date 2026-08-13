@@ -29,16 +29,20 @@ export function BannerForm({ initial = {} }: { initial?: BannerInitial }) {
       <FormError message={state.error} />
 
       <section className="rounded-2xl border border-border bg-card p-6">
-        <h2 className="font-display text-lg">Imagem de fundo</h2>
+        <h2 className="font-display text-lg">Imagem (opcional)</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          O fundo do banner é a <strong>imagem fixa</strong> definida no topo do menu Home.
+          A imagem abaixo é opcional — o banner pode ter ou não.
+        </p>
         <div className="mt-4">
-          <ImageUpload name="image" label="Imagem do banner (fundo)" defaultValue={initial.image} hint="1920 × 1080 px (16:9, paisagem)" />
+          <ImageUpload name="image" label="Imagem do banner (opcional)" defaultValue={initial.image} hint="1920 × 1080 px (16:9, paisagem)" />
         </div>
       </section>
 
       <section className="rounded-2xl border border-border bg-card p-6">
         <h2 className="font-display text-lg">Textos</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Deixe em branco para exibir só a imagem. Use *texto* para destacar em laranja no título.
+          Use *texto* entre asteriscos para destacar em laranja no título.
         </p>
         <div className="mt-4 grid gap-5 sm:grid-cols-2">
           <Field label="Selo (pílula pequena)" htmlFor="badge" className="sm:col-span-2">

@@ -22,7 +22,7 @@ export default async function EditarBannerPage({
       <BannerForm
         initial={{
           id: b.id,
-          image: b.image,
+          image: b.image ?? undefined,
           badge: b.badge ?? undefined,
           title: b.title ?? undefined,
           subtitle: b.subtitle ?? undefined,

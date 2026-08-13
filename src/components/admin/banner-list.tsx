@@ -36,8 +36,12 @@ export async function BannerList() {
         ) : (
           banners.map((b) => (
             <div key={b.id} className="flex items-center gap-3 rounded-xl border border-border p-3">
-              <div className="relative h-14 w-24 shrink-0 overflow-hidden rounded-lg bg-muted">
-                <Image src={b.image} alt="" fill sizes="96px" className="object-cover" />
+              <div className="relative grid h-14 w-24 shrink-0 place-items-center overflow-hidden rounded-lg bg-muted text-[10px] text-muted-foreground">
+                {b.image ? (
+                  <Image src={b.image} alt="" fill sizes="96px" className="object-cover" />
+                ) : (
+                  <span>sem foto</span>
+                )}
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">{b.title || "(sem título)"}</p>

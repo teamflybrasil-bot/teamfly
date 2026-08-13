@@ -389,11 +389,9 @@ export async function saveBanner(
   try {
     await requireSession();
     const id = str(formData, "id");
-    const image = str(formData, "image");
-    if (!image) return { error: "Envie a imagem do banner." };
 
     const data = {
-      image,
+      image: optStr(formData, "image"),
       badge: optStr(formData, "badge"),
       title: optStr(formData, "title"),
       subtitle: optStr(formData, "subtitle"),

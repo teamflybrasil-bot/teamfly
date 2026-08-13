@@ -309,7 +309,7 @@ export async function getPlans(): Promise<PlanData[]> {
 
 export interface BannerData {
   id: string;
-  image: string;
+  image?: string;
   badge?: string;
   title?: string;
   subtitle?: string;
@@ -325,7 +325,7 @@ export async function getBanners(): Promise<BannerData[]> {
   });
   return rows.map((r) => ({
     id: r.id,
-    image: r.image,
+    image: r.image ?? undefined,
     badge: r.badge ?? undefined,
     title: r.title ?? undefined,
     subtitle: r.subtitle ?? undefined,

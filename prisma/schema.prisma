@@ -148,7 +148,7 @@ model Testimonial {
 // ------------------------------------------------------------------
 model Banner {
   id        String   @id @default(cuid())
-  image     String
+  image     String?
   badge     String?
   title     String?
   subtitle  String?
