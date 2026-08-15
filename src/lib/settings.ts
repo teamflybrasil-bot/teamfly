@@ -45,7 +45,7 @@ export const settingFields: SettingField[] = [
 
 /** Valores padrão (fallback quando não há registro no banco). */
 export const defaultSettings: Record<string, string> = {
-  "brand.logo": "",
+  "brand.logo": "/brand/logo-oficial.png",
   "home.heroImage": "/brand/home-hero.png",
   "hero.badge": siteConfig.positioning,
   "hero.title": "A logística que leva sua equipe *ao pódio.*",
