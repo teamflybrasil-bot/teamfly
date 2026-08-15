@@ -18,6 +18,7 @@ export interface SettingField {
 /** Definição dos campos editáveis, agrupados para a tela do admin. */
 export const settingFields: SettingField[] = [
   // Home
+  { key: "brand.logo", label: "Logo do site (cabeçalho)", group: "Home", type: "image", help: "Substitui a logo padrão no topo do site (sobre o fundo branco). Ideal PNG com fundo transparente, ex.: 220 × 60 px. Deixe em branco para usar a logo padrão." },
   { key: "home.heroImage", label: "Imagem fixa do banner", group: "Home", type: "image", help: "Imagem de fundo do banner da home (o texto gira à esquerda, sobre um sombreado). Ideal larga/panorâmica, ex.: 1920 × 800 px — sem texto." },
   // A Empresa
   { key: "about.historia", label: "Nossa história", group: "A Empresa", type: "textarea", help: "Separe parágrafos com uma linha em branco." },
@@ -44,6 +45,7 @@ export const settingFields: SettingField[] = [
 
 /** Valores padrão (fallback quando não há registro no banco). */
 export const defaultSettings: Record<string, string> = {
+  "brand.logo": "",
   "home.heroImage": "/brand/home-hero.png",
   "hero.badge": siteConfig.positioning,
   "hero.title": "A logística que leva sua equipe *ao pódio.*",

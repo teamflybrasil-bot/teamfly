@@ -11,7 +11,7 @@ import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 import { ButtonLink } from "@/components/ui/button";
 
-export function Header() {
+export function Header({ logo }: { logo?: string }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -39,7 +39,7 @@ export function Header() {
       )}
     >
       <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6 py-4">
-        <Logo />
+        <Logo src={logo} />
 
         <ul className="hidden items-center gap-1 lg:flex">
           {mainNav.map((item) => (
