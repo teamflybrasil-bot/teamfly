@@ -4,6 +4,7 @@ import { PageHero } from "@/components/shared/page-hero";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/shared/reveal";
 import { CtaBand } from "@/components/home/cta-band";
+import { SubmitTestimonial } from "@/components/forms/submit-testimonial";
 import { getTestimonials } from "@/server/data";
 
 export const dynamic = "force-dynamic";
@@ -50,6 +51,12 @@ export default async function DepoimentosPage() {
               ))}
             </div>
           )}
+        </Container>
+      </section>
+
+      <section className="pb-20">
+        <Container>
+          <SubmitTestimonial />
         </Container>
       </section>
 

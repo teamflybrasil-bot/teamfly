@@ -42,3 +42,13 @@ export const contactSchema = z.object({
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;
+
+/** Schema do envio de depoimento pelo visitante. */
+export const testimonialSchema = z.object({
+  name: z.string().min(2, "Informe seu nome"),
+  role: z.string().min(2, "Informe seu cargo, equipe ou clube"),
+  quote: z.string().min(10, "Escreva seu depoimento (mín. 10 caracteres)"),
+  website: z.string().max(0).optional().or(z.literal("")),
+});
+
+export type TestimonialInput = z.infer<typeof testimonialSchema>;
