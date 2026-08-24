@@ -65,9 +65,9 @@ export function SubmitTestimonial() {
           <span className="mx-auto grid size-12 place-items-center rounded-full bg-orange-500/10 text-orange-500">
             <Quote className="size-6" />
           </span>
-          <h3 className="mt-4 font-display text-2xl">Já viajou com a TeamFly?</h3>
+          <h3 className="mt-4 font-display text-2xl">Já contratou a TeamFly Brasil?</h3>
           <p className="mt-2 text-muted-foreground">
-            Conte como foi a sua experiência — seu depoimento pode aparecer aqui.
+            Conte para nós como foi a sua experiência.
           </p>
           <Button size="lg" className="mt-6" onClick={() => setOpen(true)}>
             <Quote className="size-5" /> Deixe seu depoimento
