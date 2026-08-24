@@ -48,8 +48,7 @@ export function SubmitTestimonial() {
         </span>
         <h3 className="mt-6 font-display text-2xl">Depoimento enviado!</h3>
         <p className="mt-2 text-muted-foreground">
-          Muito obrigado! Seu depoimento será revisado pela nossa equipe antes de
-          aparecer no site.
+          Muito obrigado, seu depoimento é muito importante para nossa equipe.
         </p>
         <Button className="mt-6" variant="outline" onClick={() => { setStatus("idle"); setOpen(false); }}>
           Voltar
