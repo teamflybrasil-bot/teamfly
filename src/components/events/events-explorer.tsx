@@ -32,15 +32,19 @@ export function EventsExplorer({
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return championships.filter((c) => {
-      const matchQ =
-        !q ||
-        c.name.toLowerCase().includes(q) ||
-        c.city.toLowerCase().includes(q);
-      const matchSport = sport === "TODOS" || c.sportSlug === sport;
-      const matchStatus = status === "TODOS" || c.status === status;
-      return matchQ && matchSport && matchStatus;
-    });
+    return championships
+      .filter((c) => {
+        const matchQ =
+          !q ||
+          c.name.toLowerCase().includes(q) ||
+          c.city.toLowerCase().includes(q);
+        const matchSport = sport === "TODOS" || c.sportSlug === sport;
+        const matchStatus = status === "TODOS" || c.status === status;
+        return matchQ && matchSport && matchStatus;
+      })
+      // Sempre em ordem crescente de data (datas ISO ordenam cronologicamente);
+      // desempate estável pelo nome quando a data é a mesma.
+      .sort((a, b) => a.date.localeCompare(b.date) || a.name.localeCompare(b.name));
   }, [championships, query, sport, status]);
 
   return (
